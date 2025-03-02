@@ -38,6 +38,7 @@ jobs:
 
       - name: Run tests with Allure
         run: |
+          source .venv/bin/activate
           if [ "${{ github.event.inputs.folder }}" == "all" ]; then
             pytest --alluredir=allure-results
           else
