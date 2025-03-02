@@ -1,0 +1,14 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"
+    Verify that add to cart button is changed to Remove when clicked
+    ","190","test_add_to_cart[chromium]","tests.cart","Sun Mar 02 11:29:03 GMT 2025","passed","Sun Mar 02 11:29:03 GMT 2025","","test_add_to_cart","",""
+"
+    Verify that user is able to place an order successfully
+    ","388","test_place_order[chromium]","tests.checkout","Sun Mar 02 11:29:04 GMT 2025","passed","Sun Mar 02 11:29:04 GMT 2025","","test_place_order","",""
+"","219","test_remove_product_from_cart[chromium]","tests.cart","Sun Mar 02 11:29:03 GMT 2025","passed","Sun Mar 02 11:29:03 GMT 2025","","test_add_to_cart","",""
+"","1079","test_logout[chromium]","tests.login","Sun Mar 02 11:29:06 GMT 2025","passed","Sun Mar 02 11:29:07 GMT 2025","","test_logout","",""
+"","0","test_demo_data","tests.login","Sun Mar 02 11:29:07 GMT 2025","passed","Sun Mar 02 11:29:07 GMT 2025","","test_democlass","",""
+"","163","test_login_with_standard_user[chromium]","tests.login","Sun Mar 02 11:29:04 GMT 2025","passed","Sun Mar 02 11:29:05 GMT 2025","","test_login","",""
+"","139","test_login_with_invalid_user[chromium]","tests.login","Sun Mar 02 11:29:05 GMT 2025","passed","Sun Mar 02 11:29:05 GMT 2025","","test_login","",""
+"","75","test_login_with_no_credentials[chromium]","tests.login","Sun Mar 02 11:29:05 GMT 2025","passed","Sun Mar 02 11:29:05 GMT 2025","","test_login","",""
+"","192","test_acces_inventory_without_login[chromium]","tests.login","Sun Mar 02 11:29:06 GMT 2025","passed","Sun Mar 02 11:29:06 GMT 2025","","test_login","",""
