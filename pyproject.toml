@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "automation-playwright"
+version = "0.1.0"
+description = ""
+authors = ["sanamtasildar <sanamtashildar6@gmail.com>"]
+readme = "README.md"
+packages = [{include = "automation_playwright", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pytest = "^8.2"
+pytest-playwright = "^0.4"
+autoflake = "^2.3"
+black = "^24.4"
+pendulum = "^3.0.0"
+isort = "^5.13.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
