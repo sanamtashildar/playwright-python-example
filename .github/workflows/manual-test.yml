@@ -55,7 +55,7 @@ jobs:
 
   publish-report:
     runs-on: ubuntu-latest
-
+    needs: manual-test
     steps:
       - uses: actions/checkout@v4
       - name: Download all test results
