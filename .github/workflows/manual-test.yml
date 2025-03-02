@@ -26,6 +26,17 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.cache/poetry
+            .venv
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
       - name: Install dependencies
         run: |
           sudo apt-get update
@@ -35,7 +46,7 @@ jobs:
           pip install poetry
           poetry install
           playwright install-deps
-          playwright install       
+          playwright install
 
       - name: Run tests with Allure
         run: |
