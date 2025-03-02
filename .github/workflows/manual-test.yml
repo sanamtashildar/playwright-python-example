@@ -73,10 +73,18 @@ jobs:
       - name: Download all test results
         uses: actions/download-artifact@v4
         with:
-          path: artifacts
+          path: allure-results
+
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4.6.1
+        id: test-results-upload
+        with:
+            name: allure-results
+            path: allure-results/
+            retention-days: 7    
 
       - name: Link Git Information And Browser Version To Allure Report
-        working-directory: allure-results
+        working-directory: artifacts
         if: always()
         run: |
             {
@@ -92,7 +100,7 @@ jobs:
       - name: Link Playwright Traces And Videos To Allure Report
         working-directory: allure-results
         if: always()
-        run: echo ARTIFACT_URL=${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} >> environment.properties
+        run: echo ARTIFACT_URL=${{ steps.test-results-upload.outputs.artifact-url }} >> environment.properties
 
       - name: Generate Allure Report
         uses: simple-elf/allure-report-action@master
