@@ -99,7 +99,7 @@ jobs:
             } >> environment.properties
 
       - name: Link Playwright Traces And Videos To Allure Report
-        working-directory: allure-results
+        working-directory: test-results
         if: always()
         run: echo ARTIFACT_URL=${{ steps.test-results-upload.outputs.artifact-url }} >> environment.properties
 
