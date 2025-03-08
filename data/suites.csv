@@ -1,7 +1,0 @@
-"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"
-    Verify that user is able to place an order successfully
-    ","378","test_place_order[chromium]","tests.checkout","Sat Mar 08 08:13:23 GMT 2025","passed","Sat Mar 08 08:13:24 GMT 2025","","test_place_order","",""
-"","1074","test_logout[chromium]","tests.login","Sat Mar 08 08:13:25 GMT 2025","passed","Sat Mar 08 08:13:26 GMT 2025","","test_logout","",""
-"","73","test_login_with_no_credentials[chromium]","tests.login","Sat Mar 08 08:13:25 GMT 2025","passed","Sat Mar 08 08:13:25 GMT 2025","","test_login","",""
-"","156","test_login_with_standard_user[chromium]","tests.login","Sat Mar 08 08:13:24 GMT 2025","passed","Sat Mar 08 08:13:24 GMT 2025","","test_login","",""
