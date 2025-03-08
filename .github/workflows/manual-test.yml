@@ -111,7 +111,7 @@ jobs:
             allure_results: test-results
             allure_report: allure-report
             gh_pages: gh-pages
-            allure_history: allure-history
+            allure_history: test-results
 
       - name: Deploy Report To Github Pages
         if: always()
