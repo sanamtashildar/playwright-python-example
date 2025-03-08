@@ -108,7 +108,7 @@ jobs:
         if: always()
         id: allure-report
         with:
-            allure_results: test-results
+            allure_results: allure-results
             allure_report: allure-report
             gh_pages: gh-pages
             allure_history: test-results
