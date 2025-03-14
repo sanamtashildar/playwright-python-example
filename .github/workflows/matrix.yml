@@ -1,0 +1,141 @@
+name: manual-test
+
+on:
+  workflow_dispatch:
+    inputs:
+      folder:
+        description: 'Folder to run tests from'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - cart
+          - checkout
+          - login
+
+jobs:
+  manual-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        folder: [cart, checkout, login]
+      fail-fast: false
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.cache/poetry
+            .venv
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          python -m venv .venv
+          source .venv/bin/activate
+          python -m pip install --upgrade pip
+          pip install poetry
+          poetry install
+          playwright install-deps
+          playwright install
+
+      - name: Run tests with Allure
+        if: ${{ github.event.inputs.folder == 'all' || github.event.inputs.folder == matrix.folder }}
+        run: |
+          source .venv/bin/activate
+          pytest tests/${{ matrix.folder }} --alluredir=allure-results
+
+      - name: Upload Allure results
+        if: always() && (github.event.inputs.folder == 'all' || github.event.inputs.folder == matrix.folder)
+        uses: actions/upload-artifact@v4.6.1
+        with:
+          name: allure-results-${{ matrix.folder }}
+          path: allure-results
+          retention-days: 7
+
+  publish-report:
+    runs-on: ubuntu-latest
+    needs: manual-test
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download all test results
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-results-cart
+          path: test-results/cart
+      - name: Download checkout test results
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-results-checkout
+          path: test-results/checkout
+      - name: Download login test results
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-results-login
+          path: test-results/login
+
+      - name: Merge Allure results
+        run: |
+          mkdir -p merged-results
+          cp -r test-results/cart/* merged-results/
+          cp -r test-results/checkout/* merged-results/
+          cp -r test-results/login/* merged-results/
+
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4.6.1
+        id: test-results-upload
+        with:
+            name: test-results
+            path: merged-results/
+            retention-days: 7    
+
+      - name: Link Git Information And Browser Version To Allure Report
+        working-directory: merged-results
+        if: always()
+        run: |
+            {
+             echo BUILD_URL=${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+             echo GIT_BRANCH=${{ github.head_ref || github.ref_name }}
+             echo GIT_COMMIT_ID=${{ github.sha }}
+             echo GIT_COMMIT_MESSAGE=$(git show -s --format=%s HEAD)
+             echo GIT_COMMIT_AUTHOR_NAME=$(git show -s --format='%ae' HEAD)
+             echo GIT_COMMIT_TIME=$(git show -s --format=%ci HEAD)
+             echo CHROME_VERSION=$(google-chrome --product-version)
+            } >> environment.properties
+
+      - name: Link Playwright Traces And Videos To Allure Report
+        working-directory: merged-results
+        if: always()
+        run: echo ARTIFACT_URL=${{ steps.test-results-upload.outputs.artifact-url }} >> environment.properties
+
+      - name: Generate Allure Report
+        uses: simple-elf/allure-report-action@master
+        if: always()
+        id: allure-report
+        with:
+            allure_results: merged-results
+            allure_report: allure-report
+            gh_pages: gh-pages
+            allure_history: allure-history
+
+      - name: Deploy Report To Github Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            publish_dir: allure-report
+            keep_files: true
