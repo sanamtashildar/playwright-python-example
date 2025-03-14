@@ -14,18 +14,20 @@ This project is a Playwright Python example designed to demonstrate automated br
 
 ## Getting Started
 
-To get started with this project, follow the instructions in the README file to set up your environment and run the example tests.
+To get started with this project, follow the instructions below to set up your environment and run the example tests.
 
 ## Requirements
 
-- Python 3.7+
-- Playwright
+- Python 3.10+
+- Poetry
 
 ## Installation
 
-1. Clone the repository
-2. Install the required dependencies using `pip install -r requirements.txt`
-3. Run the example tests using `pytest`
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/sanamtashildar/playwright-python-example.git
+   cd playwright-python-example
+```
 
 ## Contributing
 
