@@ -1,4 +1,4 @@
-![Manual Build](https://github/sanamtashildar/playwright-python-example/actions/workflows/manual-test.yml)
+![Manual Build](https://github/sanamtashildar/playwright-python-example/actions/workflows/manual-test.yml/badge.svg)
 
 
 # Project Description
