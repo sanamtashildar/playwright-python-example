@@ -1,4 +1,4 @@
-![Manual Build](https://img.shields.io/github/actions/workflow/status/sanamtashildar/playwright-python-example/manual-test.yml?branch=main)
+![Manual Build](https://github/sanamtashildar/playwright-python-example/actions/workflows/manual-test.yml)
 
 
 # Project Description
