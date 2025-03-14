@@ -1,4 +1,4 @@
-name: manual-test
+name: matrix
 
 on:
   workflow_dispatch:
