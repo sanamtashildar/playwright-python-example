@@ -52,9 +52,9 @@ jobs:
         run: |
           source .venv/bin/activate
           if [ "${{ github.event.inputs.folder }}" == "all" ]; then
-            pytest --alluredir=allure-results --tracing=on
+            pytest --alluredir=allure-results 
           else
-            pytest tests/${{ github.event.inputs.folder }} --alluredir=allure-results --tracing=on
+            pytest tests/${{ github.event.inputs.folder }} --alluredir=allure-results 
           fi
 
       - name: Upload Allure results

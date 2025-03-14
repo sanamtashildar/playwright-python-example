@@ -16,4 +16,4 @@ def set_up_tear_down(page) -> None:
     page.context.tracing.stop(path=trace_path)
     
     # Attach trace to Allure report
-    allure.attach.file(trace_path, name="Trace", attachment_type=allure.attachment_type.ZIP)
+    allure.attach.file(trace_path, name="Trace", attachment_type=allure.attachment_type, extension="zip")
