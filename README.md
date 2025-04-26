@@ -32,7 +32,3 @@ To get started with this project, follow the instructions below to set up your e
 ## Contributing
 
 Contributions are welcome! Please read the CONTRIBUTING.md file for guidelines on how to contribute to this project.
-
-## License
-
-This project is licensed under the MIT License. See the LICENSE file for more details.
