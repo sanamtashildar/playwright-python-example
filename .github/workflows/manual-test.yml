@@ -1,17 +1,15 @@
 name: manual-test
 
 on:
+  schedule:
+    # Runs daily at 02:00 UTC
+    - cron: '0 2 * * *'
   workflow_dispatch:
     inputs:
-      folder:
-        description: 'Folder to run tests from'
+      run_tests:
+        description: 'Run E2E tests'
         required: true
-        default: 'all'
-        type: choice
-        options:
-          - all
-          - cart
-          - checkout
+        default: 'true'
 
 jobs:
   manual-test:
@@ -48,14 +46,10 @@ jobs:
           playwright install-deps
           playwright install
 
-      - name: Run tests with Allure
+      - name: Run E2E test with Allure
         run: |
           source .venv/bin/activate
-          if [ "${{ github.event.inputs.folder }}" == "all" ]; then
-            pytest --alluredir=allure-results 
-          else
-            pytest tests/${{ github.event.inputs.folder }} --alluredir=allure-results 
-          fi
+          pytest tests/workflow/test_e2e_checkout.py --alluredir=allure-results
 
       - name: Upload Allure results
         if: always()
