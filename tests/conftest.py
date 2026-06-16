@@ -1,8 +1,9 @@
 import pytest
-import allure
+from playwright.sync_api import Page
+# import allure
 
 @pytest.fixture()
-def set_up_tear_down(page) -> None:
+def set_up_tear_down(page: Page):
     page.set_viewport_size({"width": 1536, "height": 800})
     page.goto("https://www.saucedemo.com")
     
@@ -16,4 +17,4 @@ def set_up_tear_down(page) -> None:
     page.context.tracing.stop(path=trace_path)
     
     # Attach trace to Allure report
-    allure.attach.file(trace_path, name="Trace", attachment_type=allure.attachment_type.ZIP)
+    # allure.attach.file(trace_path, name="Trace", attachment_type=allure.attachment_type.ZIP)

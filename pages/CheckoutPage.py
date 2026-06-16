@@ -10,13 +10,13 @@ class CheckoutPage:
     def get_confirm_message(self):
         return self.page.locator(CheckoutPageLocators.CONFIRM_MESSAGE)
 
-    def checkout(self, checkout_data: CheckoutData):
+    def checkout(self, checkout_data: CheckoutData = None):
         """
         Complete the checkout process with all steps in one function
         
         Args:
-            checkout_data: CheckoutData object with first_name, last_name, and postal_code
-                          If None, creates a new CheckoutData with random values
+            checkout_data: Optional CheckoutData object with first_name, last_name, and postal_code.
+                          If None, a new CheckoutData object will be generated.
         
         Returns:
             self for method chaining
