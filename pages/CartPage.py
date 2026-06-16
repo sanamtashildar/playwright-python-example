@@ -1,4 +1,5 @@
-from src.automation_playwright.pages.CheckoutPage import CheckoutPage
+from pages.CheckoutPage import CheckoutPage
+from pages.locators import CartPageLocators
 
 
 class CartPage:
@@ -8,7 +9,7 @@ class CartPage:
 
     def __init__(self, page):
         self.page = page
-        self._checkout_button = page.locator("#checkout")
+        self._checkout_button = page.locator(CartPageLocators.CHECKOUT_BUTTON)
 
     def click_checkout_button(self):
         self._checkout_button.click()
