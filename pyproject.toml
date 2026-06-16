@@ -4,7 +4,6 @@ version = "0.1.0"
 description = ""
 authors = ["sanamtasildar <sanamtashildar6@gmail.com>"]
 readme = "README.md"
-packages = [{include = "automation_playwright", from = "src"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
