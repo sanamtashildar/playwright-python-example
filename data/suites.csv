@@ -1,14 +1,2 @@
 "DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","197","test_acces_inventory_without_login[chromium]","tests.login","Mon May 18 11:16:19 UTC 2026","passed","Mon May 18 11:16:20 UTC 2026","","test_login","",""
-"","1119","test_logout[chromium]","tests.login","Mon May 18 11:16:20 UTC 2026","passed","Mon May 18 11:16:21 UTC 2026","","test_logout","",""
-"
-    Verify that add to cart button is changed to Remove when clicked
-    ","240","test_add_to_cart[chromium]","tests.cart","Mon May 18 11:16:16 UTC 2026","passed","Mon May 18 11:16:16 UTC 2026","","test_add_to_cart","",""
-"
-    Verify that user is able to place an order successfully
-    ","455","test_place_order[chromium]","tests.checkout","Mon May 18 11:16:17 UTC 2026","passed","Mon May 18 11:16:17 UTC 2026","","test_place_order","",""
-"","0","test_demo_data","tests.login","Mon May 18 11:16:21 UTC 2026","passed","Mon May 18 11:16:21 UTC 2026","","test_democlass","",""
-"","82","test_login_with_no_credentials[chromium]","tests.login","Mon May 18 11:16:19 UTC 2026","passed","Mon May 18 11:16:19 UTC 2026","","test_login","",""
-"","148","test_login_with_invalid_user[chromium]","tests.login","Mon May 18 11:16:18 UTC 2026","passed","Mon May 18 11:16:19 UTC 2026","","test_login","",""
-"","187","test_login_with_standard_user[chromium]","tests.login","Mon May 18 11:16:18 UTC 2026","passed","Mon May 18 11:16:18 UTC 2026","","test_login","",""
-"","323","test_remove_product_from_cart[chromium]","tests.cart","Mon May 18 11:16:16 UTC 2026","passed","Mon May 18 11:16:17 UTC 2026","","test_add_to_cart","",""
+"Verify end-to-end workflow: login, add to cart, checkout, and logout.","1416","test_e2e_checkout_login_add_to_cart_checkout_logout[chromium]","tests.workflow","2026-06-16","passed","2026-06-16","","test_e2e_checkout","",""
