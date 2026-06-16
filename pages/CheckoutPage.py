@@ -10,7 +10,7 @@ class CheckoutPage:
     def get_confirm_message(self):
         return self.page.locator(CheckoutPageLocators.CONFIRM_MESSAGE)
 
-    def checkout(self, checkout_data: CheckoutData = None):
+    def checkout(self, checkout_data: CheckoutData):
         """
         Complete the checkout process with all steps in one function
         
