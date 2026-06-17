@@ -54,12 +54,10 @@ pipeline {
 
                     uv --version
                     uv python install ${UV_PYTHON_VERSION}
-                    uv venv --python ${UV_PYTHON_VERSION} .venv
-                    python get-pip.py
+                    uv venv --clear --python ${UV_PYTHON_VERSION} .venv
 
                     . .venv/bin/activate
                     python --version
-                    python -m pip --version
                     uv pip install poetry
                     poetry --version
                 '''
