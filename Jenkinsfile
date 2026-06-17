@@ -41,9 +41,15 @@ pipeline {
                     if command -v python3 >/dev/null 2>&1; then
                         echo "python3 is already installed."
                     elif command -v apt-get >/dev/null 2>&1; then
-                        SUDO=""
-                        if command -v sudo >/dev/null 2>&1; then
+                        if [ "$(id -u)" = "0" ]; then
+                            SUDO=""
+                        elif command -v sudo >/dev/null 2>&1; then
                             SUDO="sudo"
+                        else
+                            echo "Python 3 is not installed, and this Jenkins user cannot run apt-get."
+                            echo "Ask an admin to run:"
+                            echo "  sudo apt-get update && sudo apt-get install -y python3 python3-pip python3-venv"
+                            exit 1
                         fi
 
                         ${SUDO} apt-get update
