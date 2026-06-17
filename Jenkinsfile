@@ -56,7 +56,8 @@ pipeline {
                     uv python install ${UV_PYTHON_VERSION}
                     uv venv --clear --python ${UV_PYTHON_VERSION} .venv
 
-                    . .venv/bin/activate
+                    export VIRTUAL_ENV="$PWD/.venv"
+                    export PATH="$VIRTUAL_ENV/bin:$PATH"
                     python --version
                     uv pip install poetry
                     poetry --version
@@ -68,7 +69,8 @@ pipeline {
             steps {
                 sh '''
                     set -eux
-                    . .venv/bin/activate
+                    export VIRTUAL_ENV="$PWD/.venv"
+                    export PATH="$VIRTUAL_ENV/bin:$PATH"
                     poetry --version
                     poetry install --no-interaction --no-root
                 '''
@@ -79,7 +81,8 @@ pipeline {
             steps {
                 sh '''
                     set -eux
-                    . .venv/bin/activate
+                    export VIRTUAL_ENV="$PWD/.venv"
+                    export PATH="$VIRTUAL_ENV/bin:$PATH"
                     poetry run playwright --version
                     poetry run playwright install ${BROWSER}
 
@@ -91,7 +94,7 @@ pipeline {
                         echo "Playwright browser system dependencies cannot be installed by this Jenkins user."
                         echo "This Jenkins environment has no sudo. Install Playwright dependencies in the Jenkins image/agent."
                         echo "Use the Dockerfile.jenkins added to this repo, or run as root/admin:"
-                        echo "  python -m playwright install-deps ${BROWSER}"
+                        echo "  python3 -m playwright install-deps ${BROWSER}"
                         exit 1
                     fi
                 '''
@@ -104,7 +107,8 @@ pipeline {
                     steps {
                         sh '''
                             set -eux
-                            . .venv/bin/activate
+                            export VIRTUAL_ENV="$PWD/.venv"
+                            export PATH="$VIRTUAL_ENV/bin:$PATH"
                             poetry run black --check .
                         '''
                     }
@@ -113,7 +117,8 @@ pipeline {
                     steps {
                         sh '''
                             set -eux
-                            . .venv/bin/activate
+                            export VIRTUAL_ENV="$PWD/.venv"
+                            export PATH="$VIRTUAL_ENV/bin:$PATH"
                             poetry run isort --check-only .
                         '''
                     }
@@ -125,7 +130,8 @@ pipeline {
             steps {
                 sh '''
                     set -eux
-                    . .venv/bin/activate
+                    export VIRTUAL_ENV="$PWD/.venv"
+                    export PATH="$VIRTUAL_ENV/bin:$PATH"
                     mkdir -p reports allure-results
 
                     HEADLESS_FLAG=""
