@@ -137,6 +137,13 @@ pipeline {
                         HEADLESS_FLAG="--headed"
                     fi
 
+                    printf "Browser=%s\\nHeadless=%s\\nJob=%s\\nBuild=%s\\n" \
+                        "${BROWSER}" \
+                        "${HEADLESS}" \
+                        "${JOB_NAME}" \
+                        "${BUILD_NUMBER}" \
+                        > allure-results/environment.properties
+
                     poetry run pytest \
                         --browser ${BROWSER} \
                         ${HEADLESS_FLAG} \
@@ -150,6 +157,14 @@ pipeline {
     post {
         always {
             junit allowEmptyResults: true, testResults: 'reports/junit.xml'
+            script {
+                try {
+                    allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
+                } catch (err) {
+                    echo "Allure Jenkins plugin is not installed or failed to publish: ${err}"
+                    echo "Install the Allure Jenkins plugin to view the report in Jenkins UI."
+                }
+            }
             archiveArtifacts allowEmptyArchive: true, artifacts: 'reports/**, allure-results/**, trace.zip'
         }
         success {
