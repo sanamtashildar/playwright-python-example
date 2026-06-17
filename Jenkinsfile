@@ -82,6 +82,7 @@ pipeline {
                     . .venv/bin/activate
                     poetry run playwright --version
                     poetry run playwright install ${BROWSER}
+                    poetry run playwright install-deps  
                 '''
             }
         }
