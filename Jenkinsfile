@@ -55,6 +55,7 @@ pipeline {
                     uv --version
                     uv python install ${UV_PYTHON_VERSION}
                     uv venv --python ${UV_PYTHON_VERSION} .venv
+                    python get-pip.py
 
                     . .venv/bin/activate
                     python --version
