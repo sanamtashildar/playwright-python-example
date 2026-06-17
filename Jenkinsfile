@@ -24,6 +24,7 @@ pipeline {
         POETRY_VIRTUALENVS_IN_PROJECT = 'true'
         PIP_DISABLE_PIP_VERSION_CHECK = '1'
         PATH = "${env.HOME}/.local/bin:${env.PATH}"
+        UV_PYTHON_VERSION = '3.12'
     }
 
     stages {
@@ -33,21 +34,33 @@ pipeline {
             }
         }
 
-        stage('Verify Agent Prerequisites') {
+        stage('Bootstrap Python') {
             steps {
                 sh '''
                     set -eux
 
-                    if ! command -v python3 >/dev/null 2>&1; then
-                        echo "Python 3 is not installed on this Jenkins agent."
-                        echo "Run this once on the Jenkins machine as root/admin:"
-                        echo "  sudo apt-get update"
-                        echo "  sudo apt-get install -y python3 python3-pip python3-venv"
-                        exit 1
+                    if ! command -v uv >/dev/null 2>&1; then
+                        if command -v curl >/dev/null 2>&1; then
+                            curl -LsSf https://astral.sh/uv/install.sh -o uv-install.sh
+                        elif command -v wget >/dev/null 2>&1; then
+                            wget -qO uv-install.sh https://astral.sh/uv/install.sh
+                        else
+                            echo "Neither python3 nor uv is available, and curl/wget is missing."
+                            echo "Install Python 3.10+ on the Jenkins agent or add curl/wget so the pipeline can bootstrap Python."
+                            exit 1
+                        fi
+                        sh uv-install.sh
                     fi
 
-                    python3 --version
-                    python3 -m pip --version
+                    uv --version
+                    uv python install ${UV_PYTHON_VERSION}
+                    uv venv --python ${UV_PYTHON_VERSION} .venv
+
+                    . .venv/bin/activate
+                    python --version
+                    python -m pip --version
+                    uv pip install poetry
+                    poetry --version
                 '''
             }
         }
@@ -56,11 +69,7 @@ pipeline {
             steps {
                 sh '''
                     set -eux
-
-                    if ! command -v poetry >/dev/null 2>&1; then
-                        python3 -m pip install --user poetry
-                    fi
-
+                    . .venv/bin/activate
                     poetry --version
                     poetry install --no-interaction --no-root
                 '''
@@ -71,6 +80,7 @@ pipeline {
             steps {
                 sh '''
                     set -eux
+                    . .venv/bin/activate
                     poetry run playwright --version
                     poetry run playwright install ${BROWSER}
                 '''
@@ -81,12 +91,20 @@ pipeline {
             parallel {
                 stage('Black') {
                     steps {
-                        sh 'poetry run black --check .'
+                        sh '''
+                            set -eux
+                            . .venv/bin/activate
+                            poetry run black --check .
+                        '''
                     }
                 }
                 stage('isort') {
                     steps {
-                        sh 'poetry run isort --check-only .'
+                        sh '''
+                            set -eux
+                            . .venv/bin/activate
+                            poetry run isort --check-only .
+                        '''
                     }
                 }
             }
@@ -96,6 +114,7 @@ pipeline {
             steps {
                 sh '''
                     set -eux
+                    . .venv/bin/activate
                     mkdir -p reports allure-results
 
                     HEADLESS_FLAG=""
