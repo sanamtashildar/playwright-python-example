@@ -6,6 +6,7 @@ Each page has its own locator class with all the selectors used on that page
 
 class LoginPageLocators:
     """Locators for Login Page"""
+
     USERNAME = "//input[@data-test='username']"  # or use get_by_placeholder("Username")
     PASSWORD = "//input[@data-test='password']"  # or use get_by_placeholder("Password")
     LOGIN_BUTTON = "//input[@id='login-button']"  # or use get_by_text("Login")
@@ -14,6 +15,7 @@ class LoginPageLocators:
 
 class ProductListPageLocators:
     """Locators for Product List Page"""
+
     PRODUCTS_HEADER = "span.title"
     BURGER_MENU_BUTTON = "button#react-burger-menu-btn"
     LOGOUT_BUTTON = "#logout_sidebar_link"
@@ -24,11 +26,13 @@ class ProductListPageLocators:
 
 class CartPageLocators:
     """Locators for Cart Page"""
+
     CHECKOUT_BUTTON = "#checkout"
 
 
 class CheckoutPageLocators:
     """Locators for Checkout Page"""
+
     FIRST_NAME = "[data-test='firstName']"
     LAST_NAME = "[data-test='lastName']"
     POSTAL_CODE = "[data-test='postalCode']"

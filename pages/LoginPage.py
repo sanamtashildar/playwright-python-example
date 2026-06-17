@@ -1,5 +1,6 @@
-from pages.ProductListPage import ProductListPage
 from pages.locators import LoginPageLocators
+from pages.ProductListPage import ProductListPage
+
 
 class LoginPage:
 
@@ -9,11 +10,11 @@ class LoginPage:
     def login(self, username, password):
         """
         Complete the login process in a single function
-        
+
         Args:
             username: The username to login with
             password: The password to login with
-        
+
         Returns:
             ProductListPage after successful login
         """

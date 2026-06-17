@@ -1,7 +1,7 @@
 from playwright.sync_api import expect
 
-from pages.LoginPage import LoginPage
 from pages.checkout_data import CheckoutData
+from pages.LoginPage import LoginPage
 
 
 def test_e2e_checkout_login_add_to_cart_checkout_logout(set_up_tear_down):
@@ -19,7 +19,9 @@ def test_e2e_checkout_login_add_to_cart_checkout_logout(set_up_tear_down):
     checkout_page = cart_page.click_checkout_button()
     checkout_page.checkout(CheckoutData())
 
-    expect(checkout_page.get_confirm_message()).to_have_text("Thank you for your order!")
+    expect(checkout_page.get_confirm_message()).to_have_text(
+        "Thank you for your order!"
+    )
 
     # Logout after checkout by returning to products page and using the burger menu logout flow
     product_page.click_burger_menu_btn()
