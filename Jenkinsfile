@@ -1,5 +1,11 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'mcr.microsoft.com/playwright/python:v1.60.0-noble'
+            args '--ipc=host'
+            reuseNode true
+        }
+    }
 
     options {
         timestamps()
@@ -33,46 +39,15 @@ pipeline {
             }
         }
 
-        stage('Install Python on Agent') {
-            steps {
-                sh '''
-                    set -eux
-
-                    if command -v python3 >/dev/null 2>&1; then
-                        echo "python3 is already installed."
-                    elif command -v apt-get >/dev/null 2>&1; then
-                        if [ "$(id -u)" = "0" ]; then
-                            SUDO=""
-                        elif command -v sudo >/dev/null 2>&1; then
-                            SUDO="sudo"
-                        else
-                            echo "Python 3 is not installed, and this Jenkins user cannot run apt-get."
-                            echo "Ask an admin to run:"
-                            echo "  sudo apt-get update && sudo apt-get install -y python3 python3-pip python3-venv"
-                            exit 1
-                        fi
-
-                        ${SUDO} apt-get update
-                        ${SUDO} apt-get install -y python3 python3-pip python3-venv
-                    else
-                        echo "Python 3 is not installed and this agent does not support apt-get."
-                        echo "Install Python 3.10+, pip, and venv on the Jenkins agent, then rerun the job."
-                        exit 1
-                    fi
-
-                    python3 --version
-                    python3 -m pip --version
-                '''
-            }
-        }
-
         stage('Setup Python Dependencies') {
             steps {
                 sh '''
                     set -eux
+                    python --version
+                    python -m pip --version
 
                     if ! command -v poetry >/dev/null 2>&1; then
-                        python3 -m pip install --user poetry
+                        python -m pip install --user poetry
                     fi
 
                     poetry --version
@@ -81,11 +56,11 @@ pipeline {
             }
         }
 
-        stage('Install Playwright Browsers') {
+        stage('Verify Playwright') {
             steps {
                 sh '''
                     set -eux
-                    poetry run playwright install ${BROWSER}
+                    poetry run playwright --version
                 '''
             }
         }
