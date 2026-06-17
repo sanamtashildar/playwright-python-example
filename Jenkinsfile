@@ -91,11 +91,9 @@ pipeline {
                     elif [ "$(id -u)" = "0" ]; then
                         .venv/bin/python -m playwright install-deps ${BROWSER}
                     else
-                        echo "Playwright browser system dependencies cannot be installed by this Jenkins user."
-                        echo "This Jenkins environment has no sudo. Install Playwright dependencies in the Jenkins image/agent."
-                        echo "Use the Dockerfile.jenkins added to this repo, or run as root/admin:"
+                        echo "Skipping Playwright system dependency installation because this Jenkins user is not root and sudo is unavailable."
+                        echo "If browser launch fails later, install dependencies in the Jenkins image/agent with:"
                         echo "  python3 -m playwright install-deps ${BROWSER}"
-                        exit 1
                     fi
                 '''
             }
