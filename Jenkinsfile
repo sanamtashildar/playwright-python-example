@@ -82,7 +82,18 @@ pipeline {
                     . .venv/bin/activate
                     poetry run playwright --version
                     poetry run playwright install ${BROWSER}
-                    sudo playwright install-deps  
+
+                    if command -v sudo >/dev/null 2>&1; then
+                        sudo .venv/bin/python -m playwright install-deps ${BROWSER}
+                    elif [ "$(id -u)" = "0" ]; then
+                        .venv/bin/python -m playwright install-deps ${BROWSER}
+                    else
+                        echo "Playwright browser system dependencies cannot be installed by this Jenkins user."
+                        echo "This Jenkins environment has no sudo. Install Playwright dependencies in the Jenkins image/agent."
+                        echo "Use the Dockerfile.jenkins added to this repo, or run as root/admin:"
+                        echo "  python -m playwright install-deps ${BROWSER}"
+                        exit 1
+                    fi
                 '''
             }
         }
