@@ -1,1 +1,1 @@
-[{"uid":"4ce5e0a7d6fe3e10","name":"test_e2e_checkout_login_add_to_cart_checkout_logout[chromium]","time":{"start":1784350510125,"stop":1784350511528,"duration":1403},"status":"passed","severity":"normal"}]
+[{"uid":"b12c2c8be576730e","name":"test_e2e_checkout_login_add_to_cart_checkout_logout[chromium]","time":{"start":1784439007184,"stop":1784439008629,"duration":1445},"status":"passed","severity":"normal"}]
