@@ -1,6 +1,6 @@
 name: matrix
 
-on:
+# on:
   workflow_dispatch:
     inputs:
       folder:
