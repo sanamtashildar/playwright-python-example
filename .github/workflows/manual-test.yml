@@ -1,6 +1,6 @@
 name: manual-test
 
-on:
+# on:
   schedule:
     # Runs daily at 02:00 UTC
     - cron: '0 2 * * *'
